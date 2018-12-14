@@ -24,3 +24,8 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+
+- script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Generate Artifacts for deployment (Release configuration)'
+  
+- task: PublishBuildArtifacts@1
