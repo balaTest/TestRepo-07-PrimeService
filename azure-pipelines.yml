@@ -11,7 +11,16 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  testProject: 'PrimeService03.UnitTests'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+  displayName: 'Build Project (Release configuration)'
+
+- script: dotnet test $(testProject) --configuration $(buildConfiguration) --logger trx
+  displayName: 'Run Tests (Release configuration)'
+
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
